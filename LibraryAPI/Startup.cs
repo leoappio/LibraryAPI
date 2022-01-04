@@ -41,9 +41,11 @@ namespace LibraryAPI
 
             //services dependency injection
             services.AddScoped<IClientService, ClientService>();
+            services.AddScoped<IBookService, BookService>();
 
             //repositories dependecy injection
             services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<IBookRepository, BookRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
