@@ -1,3 +1,6 @@
+using LibraryAPI._1_Services;
+using LibraryAPI._3_Domain.Interfaces;
+using LibraryAPI._4_Infraestructure.Data.Repositories;
 using LibraryAPI.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,6 +38,12 @@ namespace LibraryAPI
             });
 
             services.AddDbContext<AppDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("ServerConnection")));
+
+            //services dependency injection
+            services.AddScoped<IClientService, ClientService>();
+
+            //repositories dependecy injection
+            services.AddScoped<IClientRepository, ClientRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

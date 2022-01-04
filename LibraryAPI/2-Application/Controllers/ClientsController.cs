@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LibraryAPI.Context;
 using LibraryAPI.Entities;
+using LibraryAPI._3_Domain.Interfaces;
+using LibraryAPI._3_Domain.Models.Client;
 
 namespace LibraryAPI.Controllers
 {
@@ -14,30 +16,32 @@ namespace LibraryAPI.Controllers
     [ApiController]
     public class ClientsController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IClientService _clientService;
 
-        public ClientsController(AppDbContext context)
+        public ClientsController( IClientService clientService)
         {
-            _context = context;
+            _clientService = clientService;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Client>>> GetClients()
         {
-            return await _context.Clients.ToListAsync();
+            return Ok(await _clientService.GetClients());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Client>> GetClient(int id)
         {
-            var client = await _context.Clients.FindAsync(id);
+            var client = await _clientService.GetClient(id);
 
             if (client == null)
             {
                 return NotFound();
             }
-
-            return client;
+            else
+            {
+                return Ok(client);
+            }
         }
 
         [HttpPut("{id}")]
@@ -47,56 +51,23 @@ namespace LibraryAPI.Controllers
             {
                 return BadRequest();
             }
-
-            _context.Entry(client).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ClientExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            await _clientService.PutClient(id, client);
+            return Ok();
         }
 
         [HttpPost]
-        public async Task<ActionResult<Client>> PostClient(Client client)
+        public async Task<ActionResult<Client>> PostClient(PostClientRequest clientRequest)
         {
-            _context.Clients.Add(client);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetClient", new { id = client.Id }, client);
+            return Ok(await _clientService.PostClient(clientRequest));
         }
 
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteClient(int id)
         {
-            var client = await _context.Clients.FindAsync(id);
-            if (client == null)
-            {
-                return NotFound();
-            }
-
-            _context.Clients.Remove(client);
-            await _context.SaveChangesAsync();
-
+            await _clientService.DeleteClient(id);
             return NoContent();
         }
 
-        private bool ClientExists(int id)
-        {
-            return _context.Clients.Any(e => e.Id == id);
-        }
     }
 }
