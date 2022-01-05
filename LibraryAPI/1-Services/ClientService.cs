@@ -1,4 +1,5 @@
-﻿using LibraryAPI._3_Domain.Interfaces;
+﻿using LibraryAPI._3_Domain.Entities;
+using LibraryAPI._3_Domain.Interfaces;
 using LibraryAPI._3_Domain.Models.Client;
 using LibraryAPI.Entities;
 using System;
@@ -11,14 +12,29 @@ namespace LibraryAPI._1_Services
     public class ClientService : IClientService
     {
         private readonly IClientRepository _clientRepository;
+        private readonly ILoanRepository _loanRepository;
+        private readonly IBookRepository _bookRepository;
 
-        public ClientService(IClientRepository clientRepository)
+        public ClientService(IClientRepository clientRepository, ILoanRepository loanRepository, IBookRepository bookRepository)
         {
             _clientRepository = clientRepository;
+            _loanRepository = loanRepository;
+            _bookRepository = bookRepository;
+            
         }
         public async Task<IEnumerable<Client>> GetClients()
         {
             return await _clientRepository.GetClients();
+        }
+        public async Task<IEnumerable<Book>> GetAllLoanBooks(int clientId)
+        {
+            var loans = _loanRepository.GetAllLoansByClientId(clientId);
+            var books = new List<Book>();
+            foreach(Loan loan in loans)
+            {
+                books.Add(await _bookRepository.GetBook(loan.BookId));
+            }
+            return books;
         }
         public async Task<Client> GetClient(int id)
         {

@@ -43,6 +43,11 @@ namespace LibraryAPI.Controllers
                 return Ok(client);
             }
         }
+        [HttpGet("GetAllLoanBooks/{clientId}")]
+        public async Task<IEnumerable<Book>> GetAllLoanBooks(int clientId)
+        {
+            return await _clientService.GetAllLoanBooks(clientId);
+        }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> PutClient(int id, Client client)

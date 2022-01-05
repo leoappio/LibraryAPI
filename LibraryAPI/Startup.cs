@@ -30,7 +30,8 @@ namespace LibraryAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddControllers().AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -42,10 +43,12 @@ namespace LibraryAPI
             //services dependency injection
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<IBookService, BookService>();
+            services.AddScoped<ILoanService, LoanService>();
 
             //repositories dependecy injection
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<ILoanRepository, LoanRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

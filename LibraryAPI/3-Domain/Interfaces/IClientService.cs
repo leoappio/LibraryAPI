@@ -14,6 +14,7 @@ namespace LibraryAPI._3_Domain.Interfaces
         public Task PutClient(int id, Client client);
         public Task<Client> PostClient(PostClientRequest client);
         public Task DeleteClient(int id);
+        public Task<IEnumerable<Book>> GetAllLoanBooks(int clientId);
 
     }
 }

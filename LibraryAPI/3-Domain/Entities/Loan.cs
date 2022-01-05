@@ -10,5 +10,12 @@ namespace LibraryAPI._3_Domain.Entities
         public int Id { get; set; }
         public int ClientId { get; set; }
         public int BookId { get; set; }
+
+        public Loan(int id, int clientId, int bookId)
+        {
+            Id = id;
+            ClientId = clientId;
+            BookId = bookId;
+        }
     }
 }
