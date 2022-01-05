@@ -9,8 +9,15 @@ namespace LibraryAPI.Entities
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public string Email { get; set; }
+        public string Author { get; set; }
         public int Quantity { get; set; }
 
+        public Book(int id, string title, string author, int quantity)
+        {
+            Id = id;
+            Title = title;
+            Author = author;
+            Quantity = quantity;
+        }
     }
 }

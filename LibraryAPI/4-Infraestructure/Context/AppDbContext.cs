@@ -1,4 +1,5 @@
-﻿using LibraryAPI.Entities;
+﻿using LibraryAPI._3_Domain.Entities;
+using LibraryAPI.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -17,6 +18,7 @@ namespace LibraryAPI.Context
         }
         public DbSet<Client> Clients {get; set;}
         public DbSet<Book> Books { get; set; }
+        public DbSet<Loan> Loans { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
