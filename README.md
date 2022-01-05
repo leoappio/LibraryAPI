@@ -10,7 +10,7 @@
 - [x] Devolver livro
 - [x] Visualizar todos os livros emprestados para um cliente
 
-###Tutorial
+Tutorial
 
 1. No Método Post Auth, clique em Try it out, coloque o email e senha para autenticação e clique em execute
 2. Com o token recebido, clique no botão "Authorize" no canto superior direito, cole apenas o token e clique em "Authorize"
