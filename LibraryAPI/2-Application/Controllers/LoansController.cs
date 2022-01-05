@@ -9,6 +9,7 @@ using LibraryAPI.Context;
 using LibraryAPI._3_Domain.Entities;
 using LibraryAPI._3_Domain.Models.Loan;
 using LibraryAPI._3_Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryAPI._2_Application.Controllers
 {
@@ -25,6 +26,7 @@ namespace LibraryAPI._2_Application.Controllers
 
         [HttpPost]
         [Route("ReturnBook")]
+        [Authorize]
         public async Task<ActionResult> ReturnBook(LoanRequest loan)
         {
             await _loanService.ReturnBook(loan);
@@ -33,6 +35,7 @@ namespace LibraryAPI._2_Application.Controllers
 
         [HttpPost]
         [Route("RealizeLoan")]
+        [Authorize]
         public async Task<ActionResult<Loan>> RealizeLoan(LoanRequest loan)
         {
             try

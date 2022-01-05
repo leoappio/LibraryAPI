@@ -9,6 +9,7 @@ using LibraryAPI.Context;
 using LibraryAPI.Entities;
 using LibraryAPI._3_Domain.Interfaces;
 using LibraryAPI._3_Domain.Models.Client;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryAPI.Controllers
 {
@@ -24,12 +25,14 @@ namespace LibraryAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Client>>> GetClients()
         {
             return Ok(await _clientService.GetClients());
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<Client>> GetClient(int id)
         {
             var client = await _clientService.GetClient(id);
@@ -44,12 +47,14 @@ namespace LibraryAPI.Controllers
             }
         }
         [HttpGet("GetAllLoanBooks/{clientId}")]
+        [Authorize]
         public async Task<IEnumerable<Book>> GetAllLoanBooks(int clientId)
         {
             return await _clientService.GetAllLoanBooks(clientId);
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> PutClient(int id, Client client)
         {
             if (id != client.Id)
@@ -61,6 +66,7 @@ namespace LibraryAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Client>> PostClient(PostClientRequest clientRequest)
         {
             return Ok(await _clientService.PostClient(clientRequest));
@@ -68,6 +74,7 @@ namespace LibraryAPI.Controllers
 
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteClient(int id)
         {
             await _clientService.DeleteClient(id);

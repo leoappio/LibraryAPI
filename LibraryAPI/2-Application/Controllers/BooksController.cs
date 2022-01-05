@@ -9,6 +9,7 @@ using LibraryAPI.Context;
 using LibraryAPI.Entities;
 using LibraryAPI._3_Domain.Interfaces;
 using LibraryAPI._3_Domain.Models.Book;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryAPI._2_Application.Controllers
 {
@@ -27,12 +28,14 @@ namespace LibraryAPI._2_Application.Controllers
 
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
         {
             return Ok(await _bookService.GetBooks());
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<Book>> GetBook(int id)
         {
             var book = await _bookService.GetBook(id);
@@ -48,6 +51,7 @@ namespace LibraryAPI._2_Application.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> PutBook(int id, Book book)
         {
             if (id != book.Id)
@@ -59,6 +63,7 @@ namespace LibraryAPI._2_Application.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Book>> PostBook(PostBookRequest bookRequest)
         {
             return Ok(await _bookService.PostBook(bookRequest));
@@ -66,6 +71,7 @@ namespace LibraryAPI._2_Application.Controllers
 
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteBook(int id)
         {
             await _bookService.DeleteBook(id);
