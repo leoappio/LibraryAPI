@@ -1,6 +1,5 @@
 # Library API
 ## Uma Api para uma biblioteca.
-<http://leolibraryapi.azurewebsites.net/swagger/index.html>
 
 ### Features
 - [x] Autenticação e Autorização via Bearer Token
